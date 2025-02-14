@@ -7,6 +7,15 @@ use App\Models\Notification;
 
 class DashboardComponent extends Component
 {
+    // Add property to track if table should be shown
+    public $readyToLoad = true;
+
+    public function init()
+    {
+        $this->readyToLoad = true;
+        $this->dispatch('show-table');
+
+    }
     public function createNotification()
     {
         // dd(1);

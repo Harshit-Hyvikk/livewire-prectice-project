@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -9,22 +10,22 @@ class AdvancedTable extends Component
 {
     use WithPagination;
 
-    // public $model;
-    // public $columns = [];
-    // public $searchColumns = [];
-    // public $orderableColumns = [];
-    // public $filterableColumns = [];
+    public $model;
+    public $columns = [];
+    public $searchColumns = [];
+    public $orderableColumns = [];
+    public $filterableColumns = [];
 
-    // // Filters and Search
-    // public $filters = [];
-    // public $search = '';
+    // Filters and Search
+    public $filters = [];
+    public $search = '';
 
-    // // Sorting
-    // public $sortField = 'id';
-    // public $sortDirection = 'desc';
+    // Sorting
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
 
-    // // Pagination
-    // public $perPage = 10;
+    // Pagination
+    public $perPage = 10;
 
     // protected $queryString = ['sortField', 'sortDirection', 'search', 'filters'];
 
@@ -42,29 +43,30 @@ class AdvancedTable extends Component
     //     }
     // }
 
-    // public function sortBy($field)
-    // {
-    //     if (!in_array($field, $this->orderableColumns)) {
-    //         return;
-    //     }
+    public function sortBy($field)
+    {
+        if (!in_array($field, $this->orderableColumns)) {
+            return;
+        }
 
-    //     if ($this->sortField === $field) {
-    //         $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-    //     } else {
-    //         $this->sortField = $field;
-    //         $this->sortDirection = 'asc';
-    //     }
-    // }
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
 
-    // public function updatingSearch()
-    // {
-    //     $this->resetPage();
-    // }
 
-    // public function updatingFilters()
-    // {
-    //     $this->resetPage();
-    // }
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedFilters()
+    {
+        $this->resetPage();
+    }
 
     public function getColumnValue($row, $column)
     {
@@ -115,21 +117,21 @@ class AdvancedTable extends Component
 
 
     public $modelName;
-    public $columns = [];
-    public $searchColumns = [];
-    public $orderableColumns = [];
-    public $filterableColumns = [];
+    // public $columns = [];
+    // public $searchColumns = [];
+    // public $orderableColumns = [];
+    // public $filterableColumns = [];
 
     public $data1;
     public $selectedRows = []; // Holds the selected row IDs
     public $selectAll = false; // Master checkbox state
 
 
-    public $filters = [];
-    public $search = '';
-    public $sortField = 'id';
-    public $sortDirection = 'desc';
-    public $perPage = 10;
+    // public $filters = [];
+    // public $search = '';
+    // public $sortField = 'id';
+    // public $sortDirection = 'desc';
+    // public $perPage = 10;
     public $dropdownVisible = false;
     public $bulkDropDown = false;
 
@@ -154,7 +156,6 @@ class AdvancedTable extends Component
         if ($value) {
 
             $this->selectedRows = collect($this->data1)->pluck('id')->toArray();
-
         } else {
 
             $this->selectedRows = [];
@@ -175,19 +176,7 @@ class AdvancedTable extends Component
         return app($this->modelName);
     }
 
-    public function sortBy($field)
-    {
-        if (!in_array($field, $this->orderableColumns)) {
-            return;
-        }
 
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
 
     public function formatColumnValue($row, $column)
     {
@@ -201,30 +190,31 @@ class AdvancedTable extends Component
             case 'name':
                 return "<span class='font-bold'>{$value}</span>";
 
-            // Add more cases for other columns as needed
+                // Add more cases for other columns as needed
 
             default:
                 return $value;
         }
     }
 
-    public function applyFilter($query, $column, $value)
-    {
-        switch ($column) {
-            case 'role':
-                return $query->whereHas('roles', function ($q) use ($value) {
-                    $q->where('name', $value);
-                });
+    // public function applyFilter($query, $column, $value)
+    // {
+    //     $column=strtolower($column);
+    //     switch ($column) {
+    //         // case 'role':
+    //         //     return $query->whereHas('roles', function ($q) use ($value) {
+    //         //         $q->where('name', $value);
+    //         //     });
 
-            case 'created_at':
-                return $query->whereDate('created_at', '>=', $value);
+    //         case 'created_at':
+    //             return $query->whereDate('created_at', '>=', $value);
 
-            // Add more cases for other filters
 
-            default:
-                return $query->where($column, $value);
-        }
-    }
+    //         default:
+    //             return $query->where($column, $value);
+    //     }
+    // }
+
 
     public function closeDropdown()
     {
@@ -260,7 +250,7 @@ class AdvancedTable extends Component
         }
     }
 
-    public function render()
+    public function render($data = null)
     {
         $query = $this->getModel()::query();
 
@@ -274,16 +264,43 @@ class AdvancedTable extends Component
         }
 
         // Apply filters
+        // foreach ($this->filters as $column => $value) {
+        //     if ($value !== '' && isset($this->filterableColumns[$column])) {
+        //         $query = $this->applyFilter($query, $column, $value);
+        //     }
+        // }
+
+
+
         foreach ($this->filters as $column => $value) {
             if ($value !== '' && isset($this->filterableColumns[$column])) {
-                $query = $this->applyFilter($query, $column, $value);
+                $query->where($column, $value);
             }
         }
+
+
+        // foreach ($this->filters as $column => $value) {
+        //     $query->when(
+        //         $value !== '' && isset($this->filterableColumns[$column]), // condition
+        //         function ($q) use ($column, $value) {
+        //             $filterConfig = $this->filterableColumns[$column];
+
+        //             if (isset($filterConfig['query'])) {
+        //                 // Apply the custom filter query
+        //                 return $filterConfig['query']($q, $value);
+        //             } else {
+        //                 // Apply the default `where` condition
+        //                 return $q->Where($column, $value);
+        //             }
+        //         }
+        //     );
+        // }
 
         // Apply sorting
         if (in_array($this->sortField, $this->orderableColumns)) {
             $query->orderBy($this->sortField, $this->sortDirection);
         }
+
 
         $data = $query->paginate($this->perPage);
         $this->data1 = $data->items();
@@ -294,5 +311,11 @@ class AdvancedTable extends Component
             'data' => $data
         ]);
         // return view('livewire.advanced-table');
+    }
+
+    public function applyFilter()
+    {
+        $this->resetPage();
+        $this->render();
     }
 }
