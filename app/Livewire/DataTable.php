@@ -20,6 +20,21 @@ use Filament\Tables\Filters\Filter;
 
 class DataTable extends Component implements HasForms, HasTable
 {
+    public $darkMode = false;
+
+    public function mount()
+    {
+        // Get the current dark mode status from session or local storage
+        $this->darkMode = session('dark_mode', false);
+    }
+
+    public function toggleDarkMode()
+    {
+        // dd($this->darkMode);
+        $this->darkMode = !$this->darkMode;
+        session(['dark_mode' => $this->darkMode]); // Store preference in session
+    }
+
     use InteractsWithForms;
     use InteractsWithTable;
 

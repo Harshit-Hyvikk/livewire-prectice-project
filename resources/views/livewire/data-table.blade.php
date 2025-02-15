@@ -1,4 +1,6 @@
-<div class="rounded bg-white">
+<div class="rounded  bg-gray-50 dark:bg-gray-900" >
+
+
 
     @php
         // dd( $this->table->getRecords(),$getStates());

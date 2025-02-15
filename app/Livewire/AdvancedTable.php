@@ -63,8 +63,13 @@ class AdvancedTable extends Component
         $this->resetPage();
     }
 
+    public function updatingFilters(){
+        $this->resetPage();
+        $this->render();
+    }
     public function updatedFilters()
     {
+        $this->render();
         $this->resetPage();
     }
 
@@ -190,7 +195,7 @@ class AdvancedTable extends Component
             case 'name':
                 return "<span class='font-bold'>{$value}</span>";
 
-                // Add more cases for other columns as needed
+            // Add more cases for other columns as needed
 
             default:
                 return $value;
@@ -250,67 +255,93 @@ class AdvancedTable extends Component
         }
     }
 
-    public function render($data = null)
+    // public function render($data = null)
+    // {
+    //     $query = $this->getModel()::query();
+
+    //     // Apply search
+    //     if ($this->search && !empty($this->searchColumns)) {
+    //         $query->where(function ($q) {
+    //             foreach ($this->searchColumns as $column) {
+    //                 $q->orWhere($column, 'like', '%' . $this->search . '%');
+    //             }
+    //         });
+    //     }
+
+    //     // Apply filters
+    //     // foreach ($this->filters as $column => $value) {
+    //     //     if ($value !== '' && isset($this->filterableColumns[$column])) {
+    //     //         $query = $this->applyFilter($query, $column, $value);
+    //     //     }
+    //     // }
+
+
+
+    //     foreach ($this->filters as $column => $value) {
+    //         if ($value !== '' && isset($this->filterableColumns[$column])) {
+    //             $query->where($column, $value);
+    //         }
+    //     }
+
+
+    //     // foreach ($this->filters as $column => $value) {
+    //     //     $query->when(
+    //     //         $value !== '' && isset($this->filterableColumns[$column]), // condition
+    //     //         function ($q) use ($column, $value) {
+    //     //             $filterConfig = $this->filterableColumns[$column];
+
+    //     //             if (isset($filterConfig['query'])) {
+    //     //                 // Apply the custom filter query
+    //     //                 return $filterConfig['query']($q, $value);
+    //     //             } else {
+    //     //                 // Apply the default `where` condition
+    //     //                 return $q->Where($column, $value);
+    //     //             }
+    //     //         }
+    //     //     );
+    //     // }
+
+    //     // Apply sorting
+    //     if (in_array($this->sortField, $this->orderableColumns)) {
+    //         $query->orderBy($this->sortField, $this->sortDirection);
+    //     }
+
+
+    //     $data = $query->paginate($this->perPage);
+    //     $this->data1 = $data->items();
+    //     // dd($this->data1);
+
+
+    //     return view('livewire.advanced-table', [
+    //         'data' => $data
+    //     ]);
+    //     // return view('livewire.advanced-table');
+    // }
+
+
+    // Example of how to render filtered data
+    public function render()
     {
-        $query = $this->getModel()::query();
-
-        // Apply search
-        if ($this->search && !empty($this->searchColumns)) {
-            $query->where(function ($q) {
-                foreach ($this->searchColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $this->search . '%');
+        $data = $this->getModel()::query()
+            ->when($this->search, function ($query) {
+                $query->where(function ($query) {
+                    foreach ($this->searchColumns as $column) {
+                        $query->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
+                });
+            })
+            ->when(!empty($this->filters), function ($query) {
+                foreach ($this->filters as $column => $value) {
+                    $value!=''? $query->where($column, $value): '';
                 }
-            });
-        }
-
-        // Apply filters
-        // foreach ($this->filters as $column => $value) {
-        //     if ($value !== '' && isset($this->filterableColumns[$column])) {
-        //         $query = $this->applyFilter($query, $column, $value);
-        //     }
-        // }
-
-
-
-        foreach ($this->filters as $column => $value) {
-            if ($value !== '' && isset($this->filterableColumns[$column])) {
-                $query->where($column, $value);
-            }
-        }
-
-
-        // foreach ($this->filters as $column => $value) {
-        //     $query->when(
-        //         $value !== '' && isset($this->filterableColumns[$column]), // condition
-        //         function ($q) use ($column, $value) {
-        //             $filterConfig = $this->filterableColumns[$column];
-
-        //             if (isset($filterConfig['query'])) {
-        //                 // Apply the custom filter query
-        //                 return $filterConfig['query']($q, $value);
-        //             } else {
-        //                 // Apply the default `where` condition
-        //                 return $q->Where($column, $value);
-        //             }
-        //         }
-        //     );
-        // }
-
-        // Apply sorting
-        if (in_array($this->sortField, $this->orderableColumns)) {
-            $query->orderBy($this->sortField, $this->sortDirection);
-        }
-
-
-        $data = $query->paginate($this->perPage);
-        $this->data1 = $data->items();
-        // dd($this->data1);
-
+            })
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate($this->perPage);
+            $this->data1=$data->items();
 
         return view('livewire.advanced-table', [
-            'data' => $data
+            'data' => $data,
         ]);
-        // return view('livewire.advanced-table');
     }
 
     public function applyFilter()

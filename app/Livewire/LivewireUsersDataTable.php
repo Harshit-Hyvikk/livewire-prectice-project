@@ -15,41 +15,54 @@ class LivewireUsersDataTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-        ->setTheadAttributes([
-            'default' => false,
-            'class' => 'bg-gray-100 overflow-x-auto',
-        ])
-        ->setTbodyAttributes([
-            'default' => false,
-            'class' => 'bg-gray-50 divide-y overflow-x-auto',
-        ])
-        ->setTrAttributes(function($row) {
-            return [
+            ->setPerPageAccepted([10, 25, 50])
+            ->setDefaultSort('created_at', 'desc')
+            ->setFilterPillsEnabled()
+            ->setEmptyMessage('No users found')
+            ->setTableWrapperAttributes([
+                'default' => false,
+                'class' => 'overflow-x-auto',
+            ])
+            ->setTableAttributes([
+                'default-color' => false,
+                'default-colors' => false,
+                'default-styling' => false,
+                'class' => 'min-w-full divide-y divide-gray-200',
+            ])
+
+            ->setTheadAttributes([
+                'default' => false,
+                'class' => 'bg-gray-100 overflow-x-auto',
+            ])
+            ->setTbodyAttributes([
+                'default' => false,
+                'class' => 'bg-gray-50 divide-y overflow-x-auto',
+            ])
+            ->setTrAttributes(function ($row) {
+                return [
+                    'default' => false,
+                    'default-colors' => false,
+                    'default-styling' => false,
+                    'class' => 'px-6 py-4 whitespace-nowrap text-sm text-gray-500 bg-gray-50',
+                ];
+            })
+            ->setThAttributes(function ($row) {
+                return [
+                    'default' => false,
+                    'class' => 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase',
+                ];
+            })
+            ->setTdAttributes(function ($row) {
+                return [
+                    'default' => false,
+                    'class' => 'px-6 py-4 whitespace-nowrap text-sm text-gray-500',
+                ];
+            })
+            ->setTableWrapperAttributes([
                 'default' => false,
                 'default-colors' => false,
                 'default-styling' => false,
-                'class' => 'px-6 py-4 whitespace-nowrap text-sm text-gray-500 bg-gray-50',
-            ];
-        })
-        ->setThAttributes(function($row) {
-            return [
-                'default' => false,
-                'class' => 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase',
-            ];
-        })
-        ->setTdAttributes(function($row) {
-            return [
-                'default' => false,
-                'class' => 'px-6 py-4 whitespace-nowrap text-sm text-gray-500',
-            ];
-        })
-        ->setTableWrapperAttributes([
-            'default-color'=> false,
-            'class' => 'overflow-x-auto',
-            ])
-        ->setTableAttributes([
-            'default-color'=> false,
-            'class' => 'overflow-x-hidden',
+                'class' => 'overflow-x-auto',
             ]);
     }
 

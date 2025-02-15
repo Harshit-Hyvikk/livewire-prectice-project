@@ -1,6 +1,6 @@
 @includeWhen(
-    $this->hasConfigurableAreaFor('before-pagination'), 
-    $this->getConfigurableAreaFor('before-pagination'), 
+    $this->hasConfigurableAreaFor('before-pagination'),
+    $this->getConfigurableAreaFor('before-pagination'),
     $this->getParametersForConfigurableArea('before-pagination')
 )
 
@@ -106,7 +106,7 @@
 </div>
 
 @includeWhen(
-    $this->hasConfigurableAreaFor('after-pagination'), 
-    $this->getConfigurableAreaFor('after-pagination'), 
+    $this->hasConfigurableAreaFor('after-pagination'),
+    $this->getConfigurableAreaFor('after-pagination'),
     $this->getParametersForConfigurableArea('after-pagination')
 )

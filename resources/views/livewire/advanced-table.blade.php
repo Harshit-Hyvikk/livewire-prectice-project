@@ -122,7 +122,7 @@
                                 {{ $config['label'] }}
                             </label>
                             @if(isset($config['options']))
-                            <select wire:model="filters.{{ $column }}" wire:change="setFilter('status', $event.target.value)" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200">
+                            <select wire:model.change="filters.{{ $column }}"  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200">
                                 <option value="">All</option>
                                 @foreach($config['options'] as $value => $label)
                                 <option value="{{ $value }}">{{ $label }}</option>

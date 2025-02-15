@@ -25,7 +25,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->defaultThemeMode(ThemeMode::Light)
+            // ->defaultThemeMode(ThemeMode::Light)
             ->id('admin')
             ->path('admin')
             ->login()
@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
             ->profile()
             ->passwordReset()
             ->emailVerification()
-            ->spa();
+            ->spa()
+            ->darkMode(true);
     }
 }
