@@ -72,11 +72,11 @@
     </style>
 
     <!-- In the <head> tag: -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- Before </body> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <!-- Before </body> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 </head>
 <body class=" bg-gray-100 dark:bg-gray-800">
@@ -109,6 +109,11 @@
         <!-- Page Content -->
         <main class=" bg-gray-100 rounded-10 dark:bg-gray-800">
             {{ $slot }}
+            <div class="bg-gray-50 p-4 m-2">
+                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+            </div>
+
+
             <div class="w-full p-5 m-4 bg-black">
 
                 <x-filament::input.wrapper>
@@ -137,8 +142,15 @@
                 width: '100%', // Make the Select2 dropdown span the full width
             });
         });
-
     </script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#description'))
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
 
 </body>
 </html>

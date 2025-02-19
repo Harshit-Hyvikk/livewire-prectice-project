@@ -20,7 +20,7 @@
 
     <div class="p-12">
         <div class="bg-white overflow-x-auto shadow-sm sm:rounded-lg max-w-full  mx-auto sm:px-6 lg:p-8">
-            @livewire('data-table')
+            @livewire('test-request-class')
         </div>
     </div>
 
@@ -32,7 +32,7 @@
     {{-- ramonrietdijk livewire table  --}}
     {{-- @livewire('ramonrietdijk.ramonrietdijk-user-table') --}}
 
-    {{-- custome simple livewire table  model ScopSearch required--}}
+    {{-- custome simple livewire table  model ScopSearch required --}}
     {{-- <livewire:user-table /> --}}
 
 
@@ -119,10 +119,11 @@
 
 
 
-    {{-- <div class="flex justify-center items-center p-4"> --}}
-    {{-- Rappasoft livewire table console error not solvable script also required --}}
-    {{-- <livewire:livewire-users-data-table /> --}}
-    {{-- @push('script')
+    <div class="flex justify-center items-center p-4">
+        {{-- Rappasoft livewire table console error not solvable script also required --}}
+        {{-- <livewire:livewire-users-data-table /> --}}
+
+        {{-- @push('script')
             <script>
                 document.addEventListener("alpine:init", () => {
                     Alpine.data("laravellivewiretable", ($wire) => ({
@@ -132,6 +133,6 @@
 
             </script>
             @endpush --}}
-    {{-- </div> --}}
+    </div>
 
 </x-app-layout>
