@@ -9,6 +9,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
@@ -46,17 +47,17 @@ class DataTable extends Component implements HasForms, HasTable
                 TextColumn::make('id')->searchable(),
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),
+                TextColumn::make('role')->searchable(),
                 TextColumn::make('phone')->searchable(),
                 TextColumn::make('address')->searchable(),
                 TextColumn::make('city')->searchable(),
             ])
             ->filters([
-                Filter::make('id'),
-                Filter::make('name'),
-                Filter::make('email'),
-                Filter::make('phone'),
-                Filter::make('address'),
-                Filter::make('city'),
+                SelectFilter::make('role')
+                    ->options([
+                        'admin' => 'Admin',
+                        'user' => 'User',
+                    ])->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -64,10 +65,10 @@ class DataTable extends Component implements HasForms, HasTable
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()->extraAttributes(['class'=>'text-secondary-600']),
+                    Tables\Actions\DeleteBulkAction::make()->extraAttributes(['class' => 'text-secondary-600']),
                     ExportBulkAction::make()
-                    ->label('Export Data')
-                ->exporter(DataTableExporter::class),
+                        ->label('Export Data')
+                        ->exporter(DataTableExporter::class),
                 ]),
             ]);
     }

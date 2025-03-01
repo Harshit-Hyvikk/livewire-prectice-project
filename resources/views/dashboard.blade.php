@@ -20,7 +20,32 @@
 
     <div class="p-12">
         <div class="bg-white overflow-x-auto shadow-sm sm:rounded-lg max-w-full  mx-auto sm:px-6 lg:p-8">
-            @livewire('test-request-class')
+            {{-- @livewire('test-request-class') --}}
+            {{-- @livewire('advanced-table', [
+                'modelName' => \App\Models\User::class,
+                'columns' => [
+                    'id' => ['label' => 'ID'],
+                    'name' => ['label' => 'Name'],
+                    'email' => ['label' => 'Email'],
+                    'created_at' => ['label' => 'Created'],
+                ],
+                'searchable' => ['name', 'email'],
+                'orderable' => ['id', 'name', 'email', 'created_at'],
+                'filterable' => [
+                    'role' => [
+                        'label' => 'Role',
+                        'options' => [
+                            'admin' => 'Admin',
+                            'user' => 'User',
+                        ],
+                    ],
+                    'created_at' => [
+                        'label' => 'Date Range',
+                    ],
+                ],
+            ]) --}}
+
+
         </div>
     </div>
 
@@ -123,16 +148,15 @@
         {{-- Rappasoft livewire table console error not solvable script also required --}}
         {{-- <livewire:livewire-users-data-table /> --}}
 
-        {{-- @push('script')
-            <script>
+        @push('script')
+            {{-- <script>
                 document.addEventListener("alpine:init", () => {
                     Alpine.data("laravellivewiretable", ($wire) => ({
                         shouldBeDisplayed: true, // Ensure this is true
                     }));
                 });
-
-            </script>
-            @endpush --}}
+            </script> --}}
+        @endpush
     </div>
 
 </x-app-layout>

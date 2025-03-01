@@ -55,6 +55,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 
@@ -64,5 +66,11 @@ class User extends Authenticatable
             $query->where('name', 'like', "%{$term}%")
                 ->orWhere('email', 'like', "%{$term}%");
         });
+    }
+
+
+    public function posts()
+    {
+        return $this->hasMany(Product::class);
     }
 }

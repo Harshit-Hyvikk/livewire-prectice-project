@@ -10,14 +10,14 @@
     <div class="mb-4 space-y-4">
         <!-- Search -->
         <div class="flex justify-between mb-4">
-            <div class="flex justify-start gap-x-3">
-                <select wire:model.change="perPage" class="rounded border-gray-300  w-16 p-2">
+            <div class="flex justify-start gap-x-3 bg-gray-100 dark:bg-gray-800">
+                <select wire:model.change="perPage" class="rounded border-gray-300  w-16 p-2 bg-gray-100 dark:bg-gray-800">
                     <option>10</option>
                     <option>25</option>
                     <option>50</option>
                     <option>100</option>
                 </select>
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between bg-gray-100 dark:bg-gray-800">
                     <!-- Custom Dropdown Menu -->
                     <div class="relative inline-block text-left" x-data="{ open: @entangle('bulkDropDown') }" x-init="$watch('open', value => @this.set('bulkDropDown', value))">
                         @if($selectedRows)
@@ -67,9 +67,9 @@
                         class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
                         placeholder="Search...">
                 </div> --}}
-                <div class="w-auto sm:w-1/3">
+                <div class="w-auto sm:w-1/3 bg-gray-100 dark:bg-gray-800">
                     <div class="relative">
-                        <input wire:model.live.debounce.300ms="search" type="text" class=" w-auto pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" placeholder="Search...">
+                        <input wire:model.live.debounce.300ms="search" type="text" class=" w-auto pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-gray-100 dark:bg-gray-800" placeholder="Search...">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
@@ -145,9 +145,9 @@
 
 </div>
 
-<div class="overflow-x-auto bg-white shadow-md rounded-lg" id="mytable">
-    <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
+<div class="overflow-x-auto bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg" id="mytable">
+    <table class="min-w-full divide-y divide-gray-200 bg-gray-100 dark:bg-gray-800">
+        <thead class=" bg-gray-100 text-black dark:bg-gray-800 dark:text-white">
             <tr class="py-3">
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <input type="checkbox" wire:model.change="selectAll" class="form-checkbox">
@@ -164,7 +164,7 @@
                 @endforeach
             </tr>
         </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
+        <tbody class="bg-white divide-y divide-gray-200 bg-gray-100 dark:bg-gray-800">
             @foreach($data as $row)
             <tr>
                 <td class="px-6 py-3 text-left">
